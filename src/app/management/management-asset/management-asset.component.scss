@@ -1,0 +1,128 @@
+label {
+    margin: .5rem;
+}
+
+.row {
+    margin-top: 5px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.input {
+    -webkit-writing-mode: horizontal-tb !important;
+    writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+    // border: none;
+}
+
+
+.in {
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    caret-color: var(--cr-input-focus-color);
+    color: var(--cr-input-color);
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    outline: none;
+    padding-bottom: var(--cr-input-padding-bottom, 6px);
+    padding-inline-end: var(--cr-input-padding-end, 8px);
+    padding-inline-start: var(--cr-input-padding-start, 8px);
+    padding-top: var(--cr-input-padding-top, 6px);
+    text-align: inherit;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-family: var(--cr-input-input_-_font-family, inherit);
+    height: var(--cr-input-input_-_height);
+    border-bottom: var(--cr-input-input_-_border-bottom);
+}
+
+.row .tb {
+  display: inline-block;
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+
+
+/*Checkboxes styles*/
+input[type="checkbox"] { 
+    display: none; 
+    +label {
+        width: auto;
+        position: relative;
+        padding-left: 30px;
+        font: 14px/20px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        &:before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            left: 0;
+            border: 2px solid #1da505;
+            position: absolute;
+        }
+    }
+    &:checked {
+        +label:before {
+            width: 10px;
+            left: 9px;
+            border-radius: 0;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    }
+}
+
+.btn-plane {
+    position: absolute;
+    top: 25px;
+    right: -20px;
+    padding: 20px
+}
+
+.text-right .btn, .corebtn {
+    padding: 0 .3rem .2rem;
+    &:hover {
+        font-size: 18px;
+        padding: 0 .25rem;
+    }
+    &:focus{
+        box-shadow: none
+    }
+}
+
+.records {
+    display: inline-block; 
+    margin: -5px 0 0 10px; 
+    width: 70px;
+}

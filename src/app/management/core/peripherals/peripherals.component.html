@@ -1,0 +1,114 @@
+<form [formGroup]="peripheralForm">
+
+    <div class="row">
+        <div class="col-sm-3 text-right">
+            <label for="category"> Category Name : </label>
+        </div>
+        <div class="col-sm-6">
+            <select (click)='getCurentData()' class="form-control" id="category" name="category" formControlName="category"
+                [ngClass]="{ 'is-invalid': isSubmitted && f.category.errors }"
+                (change)="setCategory($event.target.value)">
+                <option [value]=''>-- Select Category --</option>
+                <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+            </select>
+            <div *ngIf="isSubmitted && f.category.errors" class="invalid-feedback">
+                <div *ngIf="f.category.errors.required">*Select Category</div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 text-right">
+            <label for="subcategory"> Subcategory Name : </label>
+        </div>
+        <div class="col-sm-6">
+            <select (click)='getCurentData()' class="form-control" id="subcategory" name="subcategory" formControlName="subcategory"
+                [ngClass]="{ 'is-invalid': isSubmitted && f.subcategory.errors }"
+                (change)="setSubCategory($event.target.value)">
+                <option [value]=''>-- Select Subcategory --</option>
+                <option *ngFor="let sub of subcategories  | subItemFilter: selectedCategory : 'category_id'"
+                    [value]="sub.id">{{sub.name}}</option>
+            </select>
+            <div *ngIf="isSubmitted && f.subcategory.errors" class="invalid-feedback">
+                <div *ngIf="f.subcategory.errors.required">*Select Sub Category</div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 text-right">
+            <label for="peripheral_name"> Peripheral Name : </label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="peripheral_name" name="peripheral_name"
+                formControlName="peripheral_name" [ngClass]="{ 'is-invalid': isSubmitted && f.peripheral_name.errors }">
+            <div *ngIf="isSubmitted && f.peripheral_name.errors" class="invalid-feedback">
+                <div *ngIf="f.peripheral_name.errors.required">*Peripheral required</div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 text-right">
+            <label for="peripheral_key"> Peripheral Key : </label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="peripheral_key" name="peripheral_key"
+                formControlName="peripheral_key" [ngClass]="{ 'is-invalid': isSubmitted && f.peripheral_key.errors }">
+            <div *ngIf="isSubmitted && f.peripheral_key.errors" class="invalid-feedback">
+                <div *ngIf="f.peripheral_key.errors.required">*Peripheral Key required</div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-success" (click)="save()">Save</button>
+        </div>
+    </div>
+</form>
+
+<div class="row text-center">
+    <div class="col text-center">
+        <div style="color: red">{{errormsg}}</div>
+        <div style="color: green">{{successmsg}}</div>
+    </div>
+</div>
+
+<div class="row">
+
+    <table class="table table-bordered table-striped m-5">
+        <thead>
+            <tr class="text-center">
+                <th>Sr No.</th>
+                <th>Peripheral Name</th>
+                <th>Sub Category Name</th>
+                <th>Key</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let peri of peripherals | subItemFilter: selectedSubCategory : 'key'; let i = index"
+                class="text-center">
+                <td>{{i+1}}</td>
+                <td>{{peri.name}}</td>
+                <td>
+                    <div *ngFor="let sub of subcategories">
+                        <div *ngIf="sub.key==peri.key">{{sub.name}}</div>
+                    </div>
+                </td>
+                <td>{{peri.peripheral_key}}</td>
+                <td>
+                    <button class="btn btn-info" style="margin-right: 10px;" (click)="edit(peri)">
+                        <i class="fas fa-pen-alt"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="delete(peri)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>

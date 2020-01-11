@@ -1,0 +1,253 @@
+<app-management-navbar></app-management-navbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="year">Year :</label>
+                    <input type="number" min="1988" class="form-control" [(ngModel)]="year"
+                        [ngClass]="{ 'is-invalid': yearPrint && !year }">
+                    <div class="invalid-feedback">
+                        <div [hidden]="year">*Year required</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button style="margin-top: 31px" (click)="print('yearPrint')" class="btn btn-dark"><i
+                            class="fas fa-print"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="employee">Employee :</label>
+                    <select class="form-control" id="employee" [(ngModel)]="employee"
+                        [ngClass]="{ 'is-invalid': employeePrint && !employee }">
+                        <option [value]='null'>-- select employee --</option>
+                        <option *ngFor="let emp of employees" [value]="emp.id">{{emp.name}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        <div [hidden]="employee">*Select Employee Name</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button style="margin-top: 31px" (click)="print('employeePrint')" class="btn btn-danger"><i
+                            class="fas fa-print"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="group">Group :</label>
+                    <select class="form-control" id="group" [(ngModel)]="group"
+                        [ngClass]="{ 'is-invalid': groupPrint && !group }">
+                        <option [value]='null'>-- select group --</option>
+                        <option *ngFor="let g of groups" [value]="g">{{g}}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        <div [hidden]="group">*Select Group</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button style="margin-top: 31px" (click)="print('groupPrint')" class="btn btn-warning"><i
+                            class="fas fa-print"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="pagination">
+                <div>
+                    <select class="form-control" id="max_item" name="max_item"
+                        (change)="onMaxItemChange($event.target.value)">
+                        <option *ngFor="let x of maxItem">{{x}}</option>
+                    </select>
+                </div>
+                <div class="page">
+                    <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th (click)="sort('indent_id')" class="hand">Indent No
+                    <span class="fa" *ngIf="key =='indent_id'"
+                        [ngClass]="{'fa-sort-alpha-down':reverse,'fa-sort-alpha-up':!reverse}">
+                    </span>
+                </th>
+                <th (click)="sort('indent_date')" class="hand">Indent Date
+                    <span class="fa" *ngIf="key =='indent_date'"
+                        [ngClass]="{'fa-sort-numeric-up':reverse,'fa-sort-numeric-down':!reverse}">
+                    </span>
+                </th>
+                <th (click)="sort('employee_name')" class="hand">Employee
+                    <span class="fas" *ngIf="key =='employee_name'"
+                        [ngClass]="{'fa-sort-alpha-down':reverse,'fa-sort-alpha-up':!reverse}">
+                    </span>
+                </th>
+                <th>Username</th>
+                <th (click)="sort('id')" class="hand">Asset ID
+                    <span class="fa" *ngIf="key =='id'"
+                        [ngClass]="{'fa-sort-alpha-up':reverse,'fa-sort-alpha-down':!reverse}">
+                    </span>
+                </th>
+                <th>Asset Details</th>
+                <th>Model No</th>
+                <th>Serial No</th>
+                <th>GRCIR No</th>
+                <th (click)="sort('grcir_date')" class="hand">GRCIR Date
+                    <span class="fa" *ngIf="key =='grcir_date'"
+                        [ngClass]="{'fa-sort-numeric-up':reverse,'fa-sort-numeric-down':!reverse}"></span>
+                </th>
+                <th>PO No</th>
+                <th (click)="sort('po_date')" class="hand">PO Date
+                    <span class="fa" *ngIf="key =='po_date'"
+                        [ngClass]="{'fa-sort-numeric-up':reverse,'fa-sort-numeric-down':!reverse}"></span>
+                </th>
+                <th>invoice No</th>
+                <th (click)="sort('price')" class="hand">Price
+                    <span class="fa" *ngIf="key =='price'"
+                        [ngClass]="{'fa-sort-numeric-up':reverse,'fa-sort-numeric-down':!reverse}"></span>
+                </th>
+                <th>Warranty</th>
+                <th>Location</th>
+                <th>Vendor</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let a of assets | searchFilter : searchText | orderBy: key : reverse | paginate: {itemsPerPage: items, currentPage: p}; ">
+                <td>{{a.indent_id}}</td>
+                <td>{{a.indent_date | date :'d/M/yyyy' }}</td>
+                <td>{{a.employee_name}}</td>
+                <td>{{a.username}}</td>
+                <td>
+                    <label (click)="showPeripherals(a)" data-toggle="modal"
+                        data-target="#peripheralModal">{{a.asset_id}}
+                    </label>
+                </td>
+                <td>{{a.asset_details}}</td>
+                <td>{{a.model_no}}</td>
+                <td>{{a.serial_no}}</td>
+                <td>{{a.grcir_no}}</td>
+                <td>{{a.grcir_date | date :'d/M/yyyy'}}</td>
+                <td>{{a.po_no}}</td>
+                <td>{{a.po_date | date :'d/M/yyyy'}}</td>
+                <td>{{a.invoice_no}}</td>
+                <td>{{a.price}}</td>
+                <td>{{a.warrenty}}</td>
+                <td>{{a.location_name}}</td>
+                <td>{{a.vendor_name}}</td>
+                <td class="text-center">
+                    <button class="btn btn-info" (click)="editAsset(a)" style="margin-right: 10px">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button class="btn btn-success" (click)="genQrcode(a)" style="margin-right: 10px">
+                        <i class="fas fa-qrcode"></i>
+                    </button>
+                    <!-- <button class="btn btn-danger" (click)="delete(a)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="print">
+    <div [hidden]="!yearPrint">
+        <table>
+            <tr *ngFor="let year of listOfYears">
+                <td>{{year.asset_id}}</td>
+                <td>{{year.price}}</td>
+                <td>{{year.employee_id}}</td>
+            </tr>
+        </table>
+    </div>
+    <div [hidden]="!employeePrint">
+        <table>
+            <tr *ngFor="let emp of listOfEmployee">
+                <td>{{emp.asset_id}}</td>
+                <td>{{emp.price}}</td>
+            </tr>
+        </table>
+    </div>
+    <div [hidden]="!groupPrint">
+        <table>
+            <tr *ngFor="let group of listOfGroups">
+                <td>{{group.group}}</td>
+                <td>{{group.price}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row" [hidden]="!Openhide" style="margin: 0%">
+    <div class="col-sm-5"></div>
+    <div class="col-sm-2" id="QRCode">
+        <qrcode [qrdata]="QrCode" [size]="200" [level]="'M'"></qrcode>
+        <span style="font-size:large">{{id}}</span>
+    </div>
+    <div class="col-sm-1">
+        <button [hidden]="!Openhide" class="btn btn-warning" (click)="png()" style="margin-right: 10px">
+            <i class="fas fa-download"></i></button>
+    </div>
+    <div class="col-sm-5"></div>
+</div>
+
+<div class="modal fade" id="peripheralModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" [hidden]="!isOpenPeripheralsByAsset">Peripherals List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="text-center col-12" style="margin-bottom: 10px;">
+                        Asset Id : {{assetPeripheralList.asset_id }}
+                    </div>
+                    <table class="table table-bordered ml-5 mr-5">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Sr No.</th>
+                                <th>Peripheral Name</th>
+                                <th>Serial No</th>
+                                <th>Peripheral ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let p of assetPeripheralList.peripheral; let i = index" class="text-center">
+                                <td>{{i+1}}</td>
+                                <td>{{p.name}}</td>
+                                <td>{{p.serial_no}}</td>
+                                <td>{{p.key}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>

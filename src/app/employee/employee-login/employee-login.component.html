@@ -1,0 +1,60 @@
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div class="row">
+            <div class="col-md-4 col-sm-3"></div>
+            <div class="col-md-4 text-center">
+                <h2 class="font-40">Employee Login</h2>
+                <hr style="border-bottom: #ccc solid 1px" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-3"></div>
+            <div class="col-md-4 col-sm-6 element-center">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Username"
+                            formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                            autofocus>
+                    </div>
+                    <div class="mb-15">
+                        <div *ngIf="submitted && f.username.errors" class="invalid-error">
+                            <div *ngIf="f.username.errors.required">*Username is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-3"></div>
+            <div class="col-md-4 col-sm-6 element-center">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password"
+                            formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    </div>
+                    <div class="mb-15">
+                        <div *ngIf="submitted && f.password.errors" class="invalid-error">
+                            <div *ngIf="f.password.errors.required">*Password is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-md-4 col-sm-3"></div>
+            <div class="col-md-4 col-sm-6 element-center text-right">
+                <button type="submit" class="btn btn-success"><i class="fas fa-sign-in-alt"></i> Login</button>
+            </div>
+        </div>
+    </form>
+</div>
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>
+<notifier-container></notifier-container>

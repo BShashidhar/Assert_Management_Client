@@ -1,0 +1,98 @@
+@import "~angular-notifier/styles";
+
+html body {
+  margin: 0%;
+  padding: 0%;
+  font-size: 16px;
+}
+
+.invalid-error{
+  font-size: 80%;
+  color: #dc3545;
+}
+.invalid-feedback {
+  margin: 0;
+}
+
+.pagination {
+  .page {
+    margin-top: 5px;
+  }
+  display:flex; 
+  align-items: flex-start; 
+  justify-content: flex-end;
+}
+
+th {
+  &.hand {
+      color: #002079;
+      &:hover {
+          cursor: pointer;
+      }
+  }
+}
+
+body .pagenotfound {
+  position: absolute;
+  background: #00AFF9 url('./assets/images/Unplugged.png') center/cover no-repeat;
+  width: 100%;
+  min-height: 88vh;
+  margin: 0;
+  color: white;
+  z-index: -100;
+}
+
+.print {
+  display: none;
+  font-size: 14px;
+}
+
+@media print {
+
+  .print {
+      display: block;
+  }
+
+  .container-fluid, app-management-navbar, header, footer {
+      display: none;
+  }
+}
+
+.pd10 {
+  padding: 10px !important;
+}
+
+// navbar
+
+
+.navbar-light{
+  background-color: #009480b2 !important;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+  font-size: 18px;
+  padding: 10px 15px;
+}
+
+.nav-item .nav-link:hover {
+  color: #000000 !important;
+  background-color: #049470be !important;
+}
+
+.navbar {
+  padding: 0 5px 0;
+}
+
+.dropdown-menu {
+  background-color: #009480b2 !important;
+  margin: 0%;
+}
+
+.dropdown-item {
+  color: white;
+  &:hover {
+      color: #000000 !important;
+      background-color: #049470be !important;
+  }
+}

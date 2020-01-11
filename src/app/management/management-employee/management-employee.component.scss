@@ -1,0 +1,33 @@
+.row {
+    margin-top: 8px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.text-right .btn{
+    padding: 0 .3rem .2rem;
+    &:hover {
+        font-size: 18px;
+        padding: 0 .25rem;
+    }
+    &:focus{
+        box-shadow: none
+    }
+}
+
+th.hand {
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.page {
+    margin-top: 10px;
+}
+
+.hidetext {
+    -webkit-text-security: disc;
+    -moz-text-security: disc;
+}

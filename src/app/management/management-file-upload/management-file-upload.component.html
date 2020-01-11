@@ -1,0 +1,210 @@
+<app-management-navbar></app-management-navbar>
+<div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+                <div class="row card">
+                        <div class="col-sm-12">
+                            <form [formGroup]="grcirForm">
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="assetF_id">Asset ID :</label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="assetF_id" name="assetF_id"
+                                                    formControlName="assetF_id" [ngClass]="{ 'is-invalid': submitted && f.assetF_id.errors }">
+                                                    <div *ngIf="saved && f.assetF_id.errors" class="invalid-error">
+                                                            <div *ngIf="f.assetF_id.errors.required">*Asset ID required</div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                        
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="grcirF">GRCIR No :</label>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="grcirF_no" name="grcirF_no"
+                                                    formControlName="grcirF_no" [ngClass]="{ 'is-invalid': submitted && f.grcirF_no.errors }">
+                                                    <div *ngIf="saved && f.grcirF_no.errors" class="invalid-error">
+                                                        <div *ngIf="f.grcirF_no.errors.required">*GRCIR Number required</div>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="grcirF_date" name="grcirF_date"
+                                                                formControlName="grcirF_date" aria-describedby="grcirF-date-addon"
+                                                                 #dp="bsDatepicker"
+                                                                bsDatepicker [(bsValue)]="grcirFDateValue" placement="right"
+                                                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" id="grcirF-date-addon"><i
+                                                            class="far fa-calendar-alt"></i></span>
+                                                        </div>
+                                                </div>  
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="poF_no">PO No :</label>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="poF_no" name="poF_no"
+                                                    formControlName="poF_no" [ngClass]="{ 'is-invalid': submitted && f.poF_no.errors }">
+                                                    <div *ngIf="saved && f.poF_no.errors" class="invalid-error">
+                                                        <div *ngIf="f.poF_no.errors.required">*PO Number required</div>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="poF_date" name="poF_date"
+                                                                formControlName="poF_date" aria-describedby="poF-date-addon"
+                                                                #dp="bsDatepicker"
+                                                                bsDatepicker [(bsValue)]="poFDateValue" placement="right"
+                                                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" id="poF-date-addon"><i
+                                                            class="far fa-calendar-alt"></i></span>
+                                                        </div>
+                                                        </div>
+                                        </div>
+                                    </div>   
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="billF_no">Bill No :</label>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="billF_no" name="billF_no"
+                                                    formControlName="billF_no" [ngClass]="{ 'is-invalid': submitted && f.billF_no.errors }">
+                                                    <div *ngIf="saved && f.billF_no.errors" class="invalid-error">
+                                                        <div *ngIf="f.billF_no.errors.required">*Bill Number required</div>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="billF_date" name="billF_date"
+                                                                formControlName="billF_date" aria-describedby="billF-date-addon"
+                                                                #dp="bsDatepicker"
+                                                                bsDatepicker [(bsValue)]="billFDateValue" placement="right"
+                                                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" id="billF-date-addon"><i
+                                                            class="far fa-calendar-alt"></i></span>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                    </div>   
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="supplier">Supplier:</label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <textarea cols="50" rows="3" class="form-control" id="supplier" name="supplier"
+                                                formControlName="supplier" [ngClass]="{ 'is-invalid': submitted && f.billF_no.errors }"></textarea>
+                                                <div *ngIf="saved && f.supplier.errors" class="invalid-error">
+                                                    <div *ngIf="f.supplier.errors.required">*Supplier required</div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="description">Description:</label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <textarea cols="50" rows="3" class="form-control" id="description" name="description"
+                                                formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                                                <div *ngIf="saved && f.description.errors" class="invalid-error">
+                                                    <div *ngIf="f.description.errors.required">*Description required</div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-2 text-right">
+                                                <label for="quantity">Quantity:</label>
+                                                <input type="number" class="form-control" id="quantity" name="quantity"
+                                                formControlName="quantity" (change)="calculateValue($event.target.value)">
+                                            </div>
+                                            <div class="col-sm-2 text-right">
+                                                <label for="received">Received:</label>
+                                                <input type="number" class="form-control" id="received" name="received"
+                                                formControlName="received">
+                                            </div>
+                                            <div class="col-sm-2 text-right">
+                                                <label for="accepted">Accepted:</label>
+                                                <input type="number" class="form-control" id="accepted" name="accepted"
+                                                formControlName="accepted" (change)="calculateValue($event.target.value)">
+                                            </div>
+                                            <div class="col-sm-2 text-right">
+                                                <label for="rate">Rate:</label>
+                                                <input type="number" class="form-control" id="rate" name="rate"
+                                                formControlName="rate" (change)="calculateValue($event.target.value)">
+                                            </div>
+                                            <div class="col-sm-3 text-right">
+                                                <label for="val">Value:</label>
+                                                <input type="number" class="form-control" id="val" name="val"
+                                                formControlName="val" readonly>
+                                            </div>
+                                    </div>
+                                    <button (click)='addGrcirF()' class="btn btn-warning" style="font-size: 110%; margin-left: 40%;">Save</button>
+                            </form>
+                        </div>
+                    </div>
+          </div>
+          <div class="col-sm-6">
+                <div class="row card">
+                        <div class="col-sm-12">
+                            <h4>Download MRR/PO</h4>
+                            <form class="row" (ngSubmit)="download()">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-5">
+                                    <input type="text" name="filename" [(ngModel)]="filename" #file="ngModel"
+                                        (keyup)="getAutoCompleteList($event)" list="namelist"
+                                        [ngClass]="{ 'is-invalid': isSubmitted && file.invalid }" class="form-control" required>
+                                    <div [hidden]="!file.errors?.required " class="invalid-feedback">
+                                        *File name required
+                                    </div>
+                                    <datalist id="namelist">
+                                        <option *ngFor="let item of nameList" [value]="item">{{item}}</option>
+                                    </datalist>
+                                </div>
+                                <div class="col-sm-5">
+                                    <button class="btn btn-success" type="submit">Download File</button>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+                <div class="row card">
+                        <div class="col-sm-12">
+                            <h4>Upload MRR/PO</h4>
+                            <div id="fileSelector">
+                                <input type="file" name="fileUplaod" id="fileUpload" class="form-control-file" multiple
+                                    ng2FileSelect [uploader]="uploader">
+                            </div>
+                            <div>
+                                <div class="row uploadList" *ngFor="let item of uploader.queue">
+                                    <div class="col-sm-4">{{item.file.name}}</div>
+                                    <div class="col-sm-5">
+                                        <div class="progress" style="margin-top: 10px;">
+                                            <div class="progress-bar bg-success" [ngStyle]="{'width':item.progress+'%'}">
+                                                {{item.progress}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="button" class="btn btn-dark" (click)="item.upload()"
+                                            style="margin-right:10px">Upload</button>
+                                        <button type="button" class="btn btn-danger" (click)="item.remove()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="uploader?.queue?.length > 0">
+                                <button type="button" class="btn btn-primary" (click)="uploader.uploadAll()">Upload All</button>
+                            </div>
+                        </div>
+                    </div>    
+          </div>
+        </div>
+</div>
+
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>
+<notifier-container></notifier-container>

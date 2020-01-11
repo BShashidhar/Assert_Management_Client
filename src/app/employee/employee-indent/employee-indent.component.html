@@ -1,0 +1,115 @@
+<app-employee-navbar></app-employee-navbar>
+
+<div class="container-fluid">
+    <form [formGroup]="indentForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+
+            <div class="col-md-5">
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 text-right">
+                        <label for="project_name">Project Name :</label>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <select class="form-control" id="project_name" name="project_name"
+                            formControlName="project_name"
+                            [ngClass]="{ 'is-invalid': submitted && f.project_name.errors }">
+                            <option *ngFor="let name of projects" [value]="name">{{name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.project_name.errors" class="invalid-feedback">
+                            <div *ngIf="f.project_name.errors.required">*Select Project Name</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <label for="material_desc">Material Description :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="material_desc" name="material_desc"
+                            formControlName="material_desc" cols="30" rows="4"
+                            [ngClass]="{ 'is-invalid': submitted && f.material_desc.errors }"></textarea>
+                        <div *ngIf="submitted && f.material_desc.errors" class="invalid-feedback">
+                            <div *ngIf="f.material_desc.errors.required">*Material description is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <label for="quantity">Quantity :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" id="quantity" name="quantity"
+                            formControlName="quantity" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }">
+                        <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                            <div *ngIf="f.quantity.errors.required">*Quantity is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <label for="price">Price/Unit :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" id="price" name="price" formControlName="price"
+                            [ngClass]="{ 'is-invalid': submitted && f.price.errors }">
+                        <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                            <div *ngIf="f.price.errors.required">*Price is required</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="col-md-7">
+
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <label for="manufacturer">Manufacturer :</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="manufacturer" name="manufacturer"
+                            formControlName="manufacturer">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <label for="suggested_vendors">Suggested Vendors :</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="suggested_vendors" name="suggested_vendors"
+                            formControlName="suggested_vendors">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <label for="remarks">Remarks :</label>
+                    </div>
+                    <div class="col-md-6">
+                        <textarea class="form-control" id="remarks" name="remarks" formControlName="remarks" cols="30"
+                            rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-3"></div>
+                    <div class="col-md-4 col-sm-6">
+                        <input type="submit" class="form-control btn btn-success" value="Save" />
+                    </div>
+                    <div class="col-md-4 col-sm-3"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </form>
+</div>

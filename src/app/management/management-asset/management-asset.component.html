@@ -1,0 +1,595 @@
+<app-management-navbar></app-management-navbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5">
+            <form [formGroup]="assetCommonForm">
+
+                <div class="row" (change)="enableProject($event.target.value)">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(1)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="division">Division :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="division" name="division" formControlName="division"
+                            [ngClass]="{ 'is-invalid': submitted && f.division.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <option [value]=''>-- Select Division --</option>
+                            <option *ngFor="let divs of divisions" [value]="divs.id">{{divs.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.division.errors" class="invalid-feedback">
+                            <div *ngIf="f.division.errors.required">*Select Division</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" [hidden]="!isOpenProjectDiv">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(5)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="project">Project :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="project" name="project" formControlName="project"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <option [value]=''>-- Select Project --</option>
+                            <option *ngFor="let proj of projects" [value]="proj.id">{{proj.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="indent_no">Indent No :</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="indent_no" name="indent_no"
+                            (keyup)="getAutoCompleteIndentList($event)" list="indentlist" formControlName="indent_no"
+                            [ngClass]="{ 'is-invalid': submitted && f.indent_no.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+
+                        <div *ngIf="submitted && f.indent_no.errors" class="invalid-feedback">
+                            <div *ngIf="f.indent_no.errors.required">*Indent No required</div>
+                        </div>
+                        <datalist id="indentlist">
+                            <option *ngFor="let indent of indentList" [value]="indent">{{indent}}</option>
+                        </datalist>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="indent_date" name="indent_date"
+                                formControlName="indent_date" aria-describedby="indent-date-addon"
+                                [ngClass]="{ 'is-invalid': submitted && f.indent_date.errors }" #dp="bsDatepicker"
+                                bsDatepicker [(bsValue)]="indentDateValue" placement="right"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                                [attr.disabled]="isFieldsDisabled ? '' : null" />
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="indent-date-addon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="department">Department :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select (click)='getCurrentData()' class="form-control" id="department" name="department"
+                            formControlName="department" [ngClass]="{ 'is-invalid': submitted && f.department.errors }"
+                            (change)="setDepartment($event.target.value)"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <option [value]=''>-- Select Department --</option>
+                            <option *ngFor="let d of departments" [value]="d.id">{{d.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.department.errors" class="invalid-feedback">
+                            <div *ngIf="f.department.errors.required">*Select Department</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" routerLink='/management/employee'>
+                            <i class="fas fa-user-edit"></i>
+                        </button>
+                        <label for="employee">Employee :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="employee" name="employee" (change)="onEmpChange()"
+                            formControlName="employee" [ngClass]="{ 'is-invalid': submitted && f.employee.errors}"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <option [value]=''>-- Select Employee --</option>
+                            <option
+                                *ngFor="let emp of employees  | subItemFilter: selectedDepartment : 'department_id' "
+                                [value]="emp.id">{{emp.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.employee.errors" class="invalid-feedback">
+                            <div *ngIf="f.employee.errors.required">*Select Employee Name</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="username">Username :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="username" name="username" formControlName="username"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(2)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="category">Category :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="category" name="category" formControlName="category"
+                            [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null" (change)="setCategory($event.target.value)"
+                            [attr.data-toggle]="modal" data-target="#addPeripheralsModal">
+                            <option [value]=''>-- Select Category --</option>
+                            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                            <div *ngIf="f.category.errors.required">*Select Category</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(3)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="subcategory">Sub Category :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="subcategory" name="subcategory" formControlName="subcategory"
+                            [ngClass]="{ 'is-invalid': submitted && f.subcategory.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null"
+                            (change)="setSubCategory($event.target.value)">
+                            <option [value]=''>-- Select Subcategory --</option>
+                            <option *ngFor="let sub of subcategories | subItemFilter: selectedCategory : 'category_id'"
+                                [value]="sub.id">{{sub.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.subcategory.errors" class="invalid-feedback">
+                            <div *ngIf="f.subcategory.errors.required">*Select Sub Category</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(4)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="asset_group">Asset Make :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="asset_group" name="asset_group" formControlName="asset_group"
+                            [ngClass]="{ 'is-invalid': submitted && f.asset_group.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <option [value]=''>-- Select Asset Make --</option>
+                            <option
+                                *ngFor="let asset of assetGroups | subItemFilter: selectedSubCategory : 'subcategory_id'"
+                                [value]="asset.id">{{asset.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.asset_group.errors" class="invalid-feedback">
+                            <div *ngIf="f.asset_group.errors.required">*Select Asset Group</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="acquired_date">Date Acquired :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" (change)="onDateChange()" on="acquired_date"
+                                id="acquired_date" name="acquired_date" formControlName="acquired_date"
+                                aria-describedby="acquired-date-addon" [attr.disabled]="isFieldsDisabled ? '' : null"
+                                [ngClass]="{ 'is-invalid': submitted && f.acquired_date.errors }" #dp="bsDatepicker"
+                                bsDatepicker [(bsValue)]="acquiredDateValue" placement="right"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="issue-date-addon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf="submitted && f.acquired_date.errors" class="invalid-error">
+                            <div *ngIf="f.acquired_date.errors.required">*Select Date Acquired</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="issue_date">Issue Date :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="issue_date" name="issue_date"
+                                formControlName="issue_date" aria-describedby="issue-date-addon"
+                                [attr.disabled]="isFieldsDisabled ? '' : null"
+                                [ngClass]="{ 'is-invalid': submitted && f.issue_date.errors }" #dp="bsDatepicker"
+                                bsDatepicker [(bsValue)]="issueDateValue" placement="right"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="issue-date-addon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf="submitted && f.issue_date.errors" class="invalid-error">
+                            <div *ngIf="f.issue_date.errors.required">*Select Issue Date</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 text-right"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-primary" style="font-size: 120%" (click)="getAssetId()">New</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-7">
+            <form [formGroup]="assetForm">
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="asset_id">Asset ID :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="asset_id" name="asset_id" formControlName="asset_id"
+                            readonly>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="asset_details">Asset Details :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <textarea type="text" class="form-control" id="asset_details" name="asset_details"
+                            formControlName="asset_details"
+                            [ngClass]="{ 'is-invalid': saved && fa.asset_details.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null" rows="2"></textarea>
+
+                        <div *ngIf="saved && fa.asset_details.errors" class="invalid-feedback">
+                            <div *ngIf="fa.asset_details.errors.required">*Asset details required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="invoice_no">Invoice No :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="invoice_no" name="invoice_no"
+                            formControlName="invoice_no" [attr.disabled]="isFieldsDisabled ? '' : null">
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="model_no">Model No :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="model_no" name="model_no" formControlName="model_no"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="serial_no">Serial No :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="serial_no" name="serial_no"
+                            formControlName="serial_no">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="grcir_no">GRCIR No :</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="grcir_no" name="grcir_no" formControlName="grcir_no"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="grcir_date" name="grcir_date"
+                                formControlName="grcir_date" aria-describedby="grcir-date-addon"
+                                [attr.disabled]="isFieldsDisabled ? '' : null"
+                                [ngClass]="{ 'is-invalid': submitted && fa.grcir_date.errors }" #dp="bsDatepicker"
+                                bsDatepicker [(bsValue)]="grcirDateValue" placement="left"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="grcir-date-addon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="po_no">PO No :</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="po_no" name="po_no" formControlName="po_no"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="po_date" name="po_date"
+                                formControlName="po_date" aria-describedby="po-date-addon"
+                                [attr.disabled]="isFieldsDisabled ? '' : null"
+                                [ngClass]="{ 'is-invalid': submitted && fa.po_date.errors }" #dp="bsDatepicker"
+                                bsDatepicker [(bsValue)]="poDateValue" placement="left"
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="po-date-addon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="price">Purchase Price :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="price" name="price" formControlName="price"
+                                [ngClass]="{ 'is-invalid': saved && fa.price.errors }"
+                                [attr.disabled]="isFieldsDisabled ? '' : null" aria-describedby="basic-addon1">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf="saved && fa.price.errors" class="invalid-error">
+                            <div *ngIf="fa.price.errors.required">*Purchase price required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="warrenty">Warranty :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="input-group">
+                            <input type="number" min="0" name="warrenty" class="form-control" id="warrenty"
+                                formControlName="warrenty" aria-describedby="basic-addon2"
+                                [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2">Year</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <button class="btn btndark" (click)="openModal(6)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="vendor">Vendor :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <select class="form-control" id="vendor" name="vendor" formControlName="vendor"
+                            [ngClass]="{ 'is-invalid': saved && fa.vendor.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null" (change)="setVendor($event.target.value)"
+                            [attr.data-toggle]="modal">
+                            <option [value]=''>-- Select Vendor --</option>
+                            <option *ngFor="let vens of vendors" [value]="vens.id">{{vens.name}}</option>
+                        </select>
+                        <div *ngIf="saved && fa.vendor.errors" class="invalid-feedback">
+                            <div *ngIf="fa.vendor.errors.required">*Select Vendor</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <button class="btn btndark" (click)="openModal(7)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="location">Location :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <select class="form-control" id="location" name="location" formControlName="location"
+                            [ngClass]="{ 'is-invalid': saved && fa.location.errors }"
+                            [attr.disabled]="isFieldsDisabled ? '' : null">
+                            <option [value]=''>-- Select Location --</option>
+                            <option *ngFor="let locs of locations" [value]="locs.id">{{locs.name}}</option>
+                        </select>
+                        <div *ngIf="saved && fa.location.errors" class="invalid-feedback">
+                            <div *ngIf="fa.location.errors.required">*Select Location</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <label for="remark">Remark :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <textarea name="remark" id="remark" formControlName="remark" class="form-control"
+                            rows="1"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 text-right"></div>
+                    <div class="col-sm-8">
+                        <button class="btn btndark corebtn" (click)="openModal(8)" data-toggle="modal"
+                            data-target="#commonModal" style="margin-bottom: 10px">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <input type="checkbox" (change)="checkPeripherals()" id="addPeripherals" name="addPeripherals"
+                            formControlName="addPeripherals" data-target="#addPeripheralsModal"
+                            [attr.data-toggle]="!isPeripheralsAdded ? 'modal' : ''">
+                        <label for="addPeripherals" style="width:145px; padding-top: 15px"> Add Peripherals</label>
+                        <input type="checkbox" id="withSerialNo" name="withSerialNo" formControlName="withSerialNo">
+                        <label for="withSerialNo" style="width:145px; padding-top: 15px"> With Serial No.</label>
+                        <button class="btn btn-warning" style="font-size: 110%; margin-bottom: 10px;"
+                            (click)="addAsset()">Save</button>
+                        <input type="number" class="form-control records" id="record" name="record"
+                            formControlName="record"> Quantity
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Peripherals Modal -->
+
+<div class="modal fade" id="addPeripheralsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Peripherals</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="peripheralsForm">
+                    <div class="row">
+                        <div class="col-md-4" style="padding-top: 10px;">
+                            <label for="peripherals_id">Peripherals :</label>
+                            <select class="form-control" id="peripherals_id" name="peripherals_id"
+                                formControlName="peripherals_id"
+                                [ngClass]="{ 'is-invalid': added && p.peripherals_id.errors }">
+                                <option *ngFor="let per of peripherals | subItemFilter: key : 'key' " [value]="per.id">
+                                    {{per.name}}</option>
+                            </select>
+                            <div *ngIf="added && p.peripherals_id.errors" class="invalid-feedback">
+                                <div *ngIf="p.peripherals_id.errors.required">*Select Peripherals</div>
+                            </div>
+                        </div>
+                        <div class="col-md-5" style="padding-top: 10px;">
+                            <label for="serial_no">Serial No :</label>
+                            <input type="text" class="form-control" id="serial_no" name="serial_no"
+                                formControlName="serial_no">
+                        </div>
+                        <div class="col-md-3 tb" style="padding-top: 5px;">
+                            <button class="btn btn-danger form-control" (click)="resetPeripherals()"
+                                style="margin-bottom: 5px;">
+                                <i class="fa fa-minus-circle"></i> Reset </button>
+                            <button class="btn btn-success form-control" (click)="addPeripheralsList()">
+                                <i class="fa fa-plus-circle"></i> Add </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" *ngIf="addedPeripheralsList.length">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Peripherals Name</th>
+                                <th>Serial No</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let p of addedPeripheralsList">
+                                <td>
+                                    <div *ngFor="let ps of peripherals">
+                                        <div *ngIf="ps.id==p.peripherals_id">
+                                            {{ps.name}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{p.serial_no}}</td>
+                                <td style="color: red;"> <i class="fa fa-trash" (click)="removePeripheral(p)"></i> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="savePeripherals()"
+                    data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="commonModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" [hidden]="!isOpenDivision">Add Division</h5>
+                <h5 class="modal-title" [hidden]="!isOpenProject">Add Project</h5>
+                <h5 class="modal-title" [hidden]="!isOpenCategory">Add Category</h5>
+                <h5 class="modal-title" [hidden]="!isOpenSubCategory">Add Sub Category</h5>
+                <h5 class="modal-title" [hidden]="!isOpenAssetGroup">Add Asset Make</h5>
+                <h5 class="modal-title" [hidden]="!isOpenVendor">Add Vendor</h5>
+                <h5 class="modal-title" [hidden]="!isOpenLocation">Add Location</h5>
+                <h5 class="modal-title" [hidden]="!isOpenPeripherals">Add Periperals</h5>
+
+                <!-- <h5 class="modal-title" [hidden]="!isOpenEmployee">Add Employee</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-division [hidden]="!isOpenDivision"></app-division>
+                <app-project [hidden]="!isOpenProject"></app-project>
+                <app-category [hidden]="!isOpenCategory"></app-category>
+                <app-sub-category [hidden]="!isOpenSubCategory"></app-sub-category>
+                <app-asset-group [hidden]="!isOpenAssetGroup"></app-asset-group>
+                <app-vendor [hidden]="!isOpenVendor"></app-vendor>
+                <app-location [hidden]="!isOpenLocation"></app-location>
+                <app-peripherals [hidden]="!isOpenPeripherals"></app-peripherals>
+                <!-- <app-management-employee [hidden]="!isOpenEmployee"></app-management-employee> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slack Loader -->
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>
+<notifier-container></notifier-container>

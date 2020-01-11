@@ -1,0 +1,53 @@
+<form [formGroup]="locationForm">
+    <div class="row">
+        <div class="col-sm-3 text-right">
+            <label for="location"> Location Name : </label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="location" name="location" formControlName="location"
+                [ngClass]="{ 'is-invalid': isSubmitted && fa.location.errors }">
+            <div *ngIf="isSubmitted && fa.location.errors" class="invalid-feedback">
+                <div *ngIf="fa.location.errors.required">*Location required</div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-success" (click)="save()">Save</button>
+        </div>
+    </div>
+</form>
+
+<div class="row text-center">
+    <div class="col text-center">
+        <div style="color: red">{{errormsg}}</div>
+        <div style="color: green">{{successmsg}}</div>
+    </div>
+</div>
+
+<div class="row">
+
+    <table class="table table-bordered table-striped m-5">
+        <thead>
+            <tr class="text-center">
+                <th>Sr No.</th>
+                <th>Location Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let loc of locations; let i = index" class="text-center">
+                <td>{{i+1}}</td>
+                <td>{{loc.name}}</td>
+                <td>
+                    <button class="btn btn-info" style="margin-right: 10px;" (click)="edit(loc)">
+                        <i class="fas fa-pen-alt"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="delete(loc)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>

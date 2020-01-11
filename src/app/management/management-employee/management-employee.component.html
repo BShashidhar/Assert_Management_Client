@@ -1,0 +1,223 @@
+<app-management-navbar></app-management-navbar>
+<div class="container-fluid">
+    <form [formGroup]="employeeForm">
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(1)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="department">Department :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select (click)='getCurrentValues()' class="form-control" id="department" name="department" formControlName="department"
+                            [ngClass]="{ 'is-invalid': submitted && f.department.errors }">
+                            <option>-- Select Department --</option>
+                            <option *ngFor="let divs of departments" [value]="divs.id">{{divs.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.department.errors" class="invalid-feedback">
+                            <div *ngIf="f.department.errors.required">*Select Department</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <button class="btn btndark" (click)="openModal(2)" data-toggle="modal"
+                            data-target="#commonModal">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <label for="designation">Designation :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <select (click)='getCurrentValues()' class="form-control" id="designation" name="designation" formControlName="designation"
+                            [ngClass]="{ 'is-invalid': submitted && f.designation.errors }">
+                            <option>-- Select Designation --</option>
+                            <option *ngFor="let des of designations" [value]="des.id">{{des.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.designation.errors" class="invalid-feedback">
+                            <div *ngIf="f.designation.errors.required">*Select Designation</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="employee_id">Employee ID :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="employee_id" name="employee_id"
+                            formControlName="employee_id"
+                            [ngClass]="{ 'is-invalid': submitted && f.employee_id.errors }">
+                        <div *ngIf="submitted && f.employee_id.errors" class="invalid-feedback">
+                            <div *ngIf="f.employee_id.errors.required">*Employee ID required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="employee_name">Employee Name :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="employee_name" name="employee_name"
+                            formControlName="employee_name"
+                            [ngClass]="{ 'is-invalid': submitted && f.employee_name.errors }">
+                        <div *ngIf="submitted && f.employee_name.errors" class="invalid-feedback">
+                            <div *ngIf="f.employee_name.errors.required">*Employee name required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="username">Username :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="username" name="username" formControlName="username"
+                            [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">*Username required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-sm-5 text-right">
+                        <label for="password">Password :</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="password" name="password"
+                            formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">*Password required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-success" (click)="save()"><i class="fas fa-plus-circle"></i>
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+                <button class='btn btn-warning' routerLink='/management/asset'><i class="fas fa-step-backward"></i> Back</button>
+        </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search...">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="pagination">
+                        <div>
+                            <select class="form-control" id="max_item" name="max_item"
+                                (change)="onMaxItemChange($event.target.value)">
+                                <option *ngFor="let x of maxItem">{{x}}</option>
+                            </select>
+                        </div>
+                        <div class="page">
+                            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th (click)="sort('emp_id')" class="hand">Employee ID
+                            <span class="fa" *ngIf="key =='emp_id'"
+                                [ngClass]="{'fa-sort-numeric-up':reverse,'fa-sort-numeric-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('name')" class="hand">Employee Name
+                            <span class="fa" *ngIf="key =='name'"
+                                [ngClass]="{'fa-sort-alpha-down':reverse,'fa-sort-alpha-up':!reverse}"></span>
+                        </th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th (click)="sort('department_name')" class="hand">Department
+                            <span class="fa" *ngIf="key =='department_name'"
+                                [ngClass]="{'fa-sort-alpha-up':reverse,'fa-sort-alpha-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('designation_name')" class="hand">Designation
+                            <span class="fa" *ngIf="key =='designation_name'"
+                                [ngClass]="{'fa-sort-alpha-up':reverse,'fa-sort-alpha-down':!reverse}"></span>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let emp of employees | searchFilter : searchText | orderBy: key : reverse | paginate: {itemsPerPage: items, currentPage: p}; ">
+                        <td>{{emp.emp_id}}</td>
+                        <td>{{emp.name}}</td>
+                        <td>{{emp.username}}</td>
+                        <td class="hidetext">{{emp.password}}</td>
+                        <td>{{emp.department_name}}</td>
+                        <td>{{emp.designation_name}}</td>
+                        <td>
+                            <button class="btn btn-info" style="margin-right: 10px;" (click)="edit(emp)">
+                                <i class="fas fa-pen-alt"></i>
+                            </button>
+                            <button class="btn btn-danger" (click)="delete(emp)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="commonModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" [hidden]="!isOpenDepartment">Add Department</h5>
+                <h5 class="modal-title" [hidden]="!isOpenDesignation">Add Designation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-department *ngIf="isOpenDepartment"></app-department>
+                <app-designation *ngIf="isOpenDesignation"></app-designation>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slack Loader -->
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>
+<notifier-container></notifier-container>

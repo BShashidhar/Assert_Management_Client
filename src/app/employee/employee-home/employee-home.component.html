@@ -1,0 +1,126 @@
+<app-employee-navbar></app-employee-navbar>
+
+<div class="container">
+    <div class="row" style="margin-top: 20px;" [hidden]="!indentPending.length">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Indent No.</th>
+                        <th>Material Description</th>
+                        <th>Price</th>
+                        <th>Qyt</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of indentPending">
+                        <td class="text-center">{{item.indent_no}}</td>
+                        <td>{{item.material_desc}}</td>
+                        <td class="text-center">{{item.price}}</td>
+                        <td class="text-center">{{item.quantity}}</td>
+                        <td class="text-center">
+                            <button class="fas fa-pencil-alt btn btn-info" title="Edit" (click)="onEdit(item)"></button>
+                            <button class="fas fa-trash btn btn-danger" title="Delete"
+                                (click)="onDelete(item)"></button>
+                            <button class="fas fa-paper-plane btn btn-success" title="Submit"
+                                (click)="onSubmit(item)"></button>
+                            <button class="fa fa-print btn btn-warning" title="print"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" [hidden]="!indentSubmitted.length">
+        <div class="col-md-12">
+            <div class="row">
+                <!-- <div class="col-md-4 mx-auto">
+                    <div class="md-form">
+                        <label for="search">Search</label>
+                        <input type="text" [(ngModel)]="searchText" class="form-control" id="search">
+                    </div>
+                </div>
+                <div class="col-md-8 text-right">
+                    <div style="margin-top: 13px; display:flex;">
+                        <div style="margin-top: 13px">
+                            <select class="form-control" id="max_item" name="max_item"
+                                (change)="onMaxItemChange($event.target.value)">
+                                <option *ngFor="let x of maxItem">{{x}}</option>
+                            </select>
+                        </div>
+                        <div class="page">
+                            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search...">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="pagination">
+                        <div>
+                            <select class="form-control" id="max_item" name="max_item"
+                                (change)="onMaxItemChange($event.target.value)">
+                                <option *ngFor="let x of maxItem">{{x}}</option>
+                            </select>
+                        </div>
+                        <div class="page">
+                            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th (click)="sort('indent')" class="hand">Indent No.
+                            <span class="fas" [hidden]="!(key =='indent')"
+                                [ngClass]="{'fa-sort-alpha-up':reverse,'fa-sort-alpha-down':!reverse}"></span>
+                        </th>
+                        <th>Material Description</th>
+                        <th (click)="sort('price')" class="hand">Price
+                            <span class="fas" [hidden]="!(key =='price')"
+                                [ngClass]="{'fa-sort-numeric-up':reverse,'fa-sort-numeric-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('quantity')" class="hand">Qyt
+                            <span class="fas" [hidden]="!(key =='quantity')"
+                                [ngClass]="{'fa-sort-numeric-down':reverse,'fa-sort-numeric-up':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('status')" class="hand">Status
+                            <span class="fas" [hidden]="!(key =='status')"
+                                [ngClass]="{'fa-sort-alpha-down':reverse,'fa-sort-alpha-up':!reverse}"></span>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of indentSubmitted |orderBy: key : reverse | searchFilter: searchText | 
+                    paginate: {itemsPerPage: items, currentPage: p}; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.indent_no}}</td>
+                        <td>{{item.material_desc}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.status_name}}</td>
+                        <td><button class="fa fa-print btn btn-warning" title="print"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slack Loader -->
+<app-slack-loader *ngIf="isLoading"></app-slack-loader>
+<notifier-container></notifier-container>
