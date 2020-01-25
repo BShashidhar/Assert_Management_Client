@@ -66,5 +66,8 @@ export class DivisionService {
         })
     })
   }
+  getAllDivision() {
+    return this._http.get<any>(Api.BASE_URL+"/management"+Api.getAllDivision)
+  }
 
 }

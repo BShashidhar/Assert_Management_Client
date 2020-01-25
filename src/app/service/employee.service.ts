@@ -128,4 +128,7 @@ export class EmployeeService {
         })
     })
   }
+  getAllEmployee() {
+    return this._http.get<any>(Api.BASE_URL+"/management"+Api.getAllEmployee)
+  }
 }

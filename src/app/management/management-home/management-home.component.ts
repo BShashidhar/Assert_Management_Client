@@ -9,6 +9,8 @@ import { DivisionService } from 'src/app/service/division.service';
 import { AssetPeripheralService } from 'src/app/service/asset-peripheral.service';
 import { DepartmentService } from 'src/app/service/department.service';
 import { DesignationService } from 'src/app/service/designation.service';
+import { LocationService } from 'src/app/service/location.service'
+import { VendorService } from 'src/app/service/vendor.service'
 
 @Component({
   selector: 'app-management-home',
@@ -28,6 +30,8 @@ export class ManagementHomeComponent implements OnInit {
     private _departmentService: DepartmentService,
     private _designationService: DesignationService,
     private _employeeService: EmployeeService,
+    private _locationService: LocationService,
+    private _vendorService: VendorService
   ) { 
     this._title.setTitle('Home')
     this._categoryService.setCategories()
@@ -38,6 +42,8 @@ export class ManagementHomeComponent implements OnInit {
     this._departmentService.setDepartment()
     this._designationService.setDesignation()
     this._employeeService.setEmployee()
+    this._locationService.setLocation()
+    this._vendorService.setVendor()
   }
 
   ngOnInit() {

@@ -169,8 +169,9 @@
         </tbody>
     </table>
 </div>
-<div class="print">
+<div class="print" style="text-align: center;margin-left: auto;margin-right: auto;">
     <div [hidden]="!yearPrint">
+        <p>Selected year:{{year}}</p>
         <table>
             <tr *ngFor="let year of listOfYears">
                 <td>{{year.asset_id}}</td>
@@ -180,6 +181,7 @@
         </table>
     </div>
     <div [hidden]="!employeePrint">
+        <p>Selected employee:{{emp}}</p>
         <table>
             <tr *ngFor="let emp of listOfEmployee">
                 <td>{{emp.asset_id}}</td>
@@ -188,6 +190,7 @@
         </table>
     </div>
     <div [hidden]="!groupPrint">
+        <p>Selected group:{{group}}</p>
         <table>
             <tr *ngFor="let group of listOfGroups">
                 <td>{{group.group}}</td>
@@ -201,11 +204,18 @@
     <div class="col-sm-5"></div>
     <div class="col-sm-2" id="QRCode">
         <qrcode [qrdata]="QrCode" [size]="200" [level]="'M'"></qrcode>
+        <div class="col-sm-4">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <text x="20" y="40" style="fill: #388ac0f3; stroke: none; font-size: 20px;">सी डैक</text>
+            <text x="20" y="60" style="fill: #388ac0f3; stroke: none; font-size: 19px;">C-DAC</text>
+        </svg>
+        </div>        
         <span style="font-size:large">{{id}}</span>
     </div>
     <div class="col-sm-1">
         <button [hidden]="!Openhide" class="btn btn-warning" (click)="png()" style="margin-right: 10px">
             <i class="fas fa-download"></i></button>
+       
     </div>
     <div class="col-sm-5"></div>
 </div>

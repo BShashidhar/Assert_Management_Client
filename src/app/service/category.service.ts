@@ -64,5 +64,8 @@ export class CategoryService {
         })
     })
   }
+  getAllCategory() {
+    return this._http.get<any>(Api.BASE_URL+"/management"+Api.getAllCategory)
+  }
 
 }

@@ -1,8 +1,5 @@
 export const Api = {
-    // BASE_URL: "http://192.9.200.195:2020/api",
-    // BASE_URL: "http://10.180.135.105:2020/api",
     BASE_URL: "http://localhost:2020/api",
-    // BASE_URL: "http://192.168.43.238:2020/api",
     employeeLogin: "/employee/login",
     employeeChangePassword: "/employee/changePassword",
     getIndentByEmployeeId: "/employee/getIndentByEmployeeId",
@@ -12,14 +9,14 @@ export const Api = {
     deleteIndent: "/employee/deleteIndent",
 
     managementLogin: "/management/login",
-    
+     
     uploadFile: "/management/uploadFile",
     downloadFile: "/management/downloadFile",
     getAllFileNames: "/management/getAllFileNames",
     getAllIndentNo: "/management/getAllIndentNo",
 
     getAssetNo: "/asset/getNumber",
-    getAssetId: "/asset/getOneAsset",
+    getAssetId: "/asset",
     getPeripheralByAsset:"/assetPeripheral/getPeripheralByAsset",
 
     getAllCategory: "/category/getAll",
@@ -78,4 +75,5 @@ export const Api = {
     deleteStatus: "/status/delete",
     deletePeripherals: "/peripherals/delete",
     deleteEmployee: "/employee/delete",
+    deleteAsset: "/asset/delete"
 }

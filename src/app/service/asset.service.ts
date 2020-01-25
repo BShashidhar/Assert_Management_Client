@@ -16,28 +16,24 @@ export class AssetService {
   getAssetNo(key) {
     return this._http.post<any>(Api.BASE_URL + "/management" + Api.getAssetNo, { key: key })
   }
-  
-  getOneAssat(id) {
-    return this._http.get<any>(Api.BASE_URL + "/management" + Api.getAssetId, id)
+
+  getAssatById(asset_id) {
+    return this._http.get<any>(Api.BASE_URL + "/management" + Api.getAssetId + "?asset_id=" + asset_id)
   }
 
   getAllAsset() {
-    return this._http.get<any>(Api.BASE_URL+"/management"+Api.getAllAsset)
+    return this._http.get<any>(Api.BASE_URL + "/management" + Api.getAllAsset)
   }
 
   addAsset(asset) {
-    return this._http.post<any>(Api.BASE_URL+"/management"+Api.addAsset, asset)
+    return this._http.post<any>(Api.BASE_URL + "/management" + Api.addAsset, asset)
   }
 
-  // deleteAsset(asset)
-  // {
-  //   return this._http.post<any>(Api.BASE_URL+"/management"+Api.deleteAsset, asset)
-  // }
-
-  updateAsset(asset) {   
-    return this._http.post<any>(Api.BASE_URL+"/management"+Api.updateAsset, asset)
+  deleteAsset(asset) {
+    return this._http.post<any>(Api.BASE_URL + "/management" + Api.deleteAsset, asset)
   }
 
-
-
+  updateAsset(asset) {
+    return this._http.post<any>(Api.BASE_URL + "/management" + Api.updateAsset, asset)
+  }
 }

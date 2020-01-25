@@ -10,9 +10,11 @@ import { PeripheralService } from 'src/app/service/peripheral.service';
 import { ManagementService } from 'src/app/service/management.service';
 import { VendorService } from 'src/app/service/vendor.service';
 import { LocationService } from 'src/app/service/location.service';
-
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 import { NotifierService } from 'angular-notifier';
+import { Api } from 'src/app/service/URL';
+import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
+// import { type } from 'os';
 
 @Component({
   selector: 'app-management-report',
@@ -22,7 +24,7 @@ import { NotifierService } from 'angular-notifier';
 
 export class ManagementReportComponent implements OnInit {
   assets: any = []
-  projects: any =[] 
+  projects: any = []
   employees: any = []
   groups: any = []
   peripherals: any = []
@@ -65,24 +67,29 @@ export class ManagementReportComponent implements OnInit {
     private _assetPeripheralService: AssetPeripheralService,
     private _dataService: DataService,
     private _router: Router,
-    private exportAsService: ExportAsService
-  ) { this._title.setTitle("Report") }
+    private exportAsService: ExportAsService,
+    private notifier: NotifierService
+  ) {
+    this._title.setTitle("Report")
+    notifier = this._notifier
+  }
 
   ngOnInit() {
     this.Init();
   }
   Init() {
-    Promise.all([this._peripheral.setPeripherals(), 
-      this._employeeService.setEmployee(),
-      this._vendorService.setVendor(), 
-      this._locationService.setLocation(),
-      this._projectService.setProject()])
+    Promise.all([
+    this._peripheral.setPeripherals(),
+    this._employeeService.setEmployee(),
+    this._vendorService.setVendor(),
+    this._locationService.setLocation(),
+    this._projectService.setProject()])
       .then(values => {
         this.peripherals = values[0]
         this.employees = values[1]
         this.vendors = values[2]
         this.locations = values[3]
-        this.projects= values[4]
+        this.projects = values[4]
         this.groups = this._managementService.getGroups()
       })
     this._assetService.getAllAsset()
@@ -111,7 +118,7 @@ export class ManagementReportComponent implements OnInit {
           this.assets.push(item)
         })
       }, err => {
-      })    
+      })
   }
 
   editAsset(asset) {
@@ -140,18 +147,36 @@ export class ManagementReportComponent implements OnInit {
   genQrcode(a) {
     this.Openhide = true
     this.id = a.asset_id;
+    var date = new Date(a.acquired_date);
+    var dd=date.getDate();
+    var mm=date.getMonth()+1;
+    var yyyy=date.getFullYear();
+    var full = a.warrenty / 1;
+    var warrentyYear = full + yyyy;
+    var remain = a.warrenty % 1;
+    var warrentyMonth = mm
+    if(  remain!=0 ){
+      
+    }
+    var warrenty = (dd-1) +'/'+warrentyMonth+'/'+warrentyYear;
+    var acquired_date =dd+'/'+mm+'/'+yyyy;
+    this._assetService.getAssatById(a.id)
+      .subscribe(data => {
+        console.log(data)
+      }, err => {
+        console.log
+      })
     this.encData = "\n\n{" +
-      "\n" + JSON.stringify("poster") + ":" + JSON.stringify("http://10.180.135.105:2020/management/asset?id="+a.id) + ","+
-      "\n" + JSON.stringify("id") + ":" + JSON.stringify(a.asset_id) + ","+
-      "\n" + JSON.stringify("owner") + ":" + JSON.stringify(a.employee_name) + ","+
-      "\n" + JSON.stringify("user") + ":" + JSON.stringify(a.username) + ","+
-      "\n" + JSON.stringify("grcir") + ":" + JSON.stringify(a.grcir_no) + ","+
-      "\n" + JSON.stringify("poNumber") + ":" + JSON.stringify(a.po_no) + ","+
-      "\n" + JSON.stringify("project") + ":" + JSON.stringify(a.project_name) + ","+
-      "\n" + JSON.stringify("details") + ":" + JSON.stringify(a.asset_details) +
+      "\n" + JSON.stringify("assetID") + ":" + JSON.stringify(a.asset_id) + "," +
+      "\n" + JSON.stringify("warrenty") + ":" + JSON.stringify(warrenty) + "," +
+      "\n" + JSON.stringify("invoiceDate") + ":" + JSON.stringify(acquired_date) + "," +
+      "\n" + JSON.stringify("supplier") + ":" + JSON.stringify(a.vendor_name) + "," +
+      "\n" + JSON.stringify("value") + ":" + JSON.stringify(a.price) + "," +
+      "\n" + JSON.stringify("project") + ":" + JSON.stringify(a.project_name) + "," +
+      "\n" + JSON.stringify("issuedTo") + ":" + JSON.stringify(a.username) + "," +
+      "\n" + JSON.stringify("usedBy") + ":" + JSON.stringify(a.employee_name) +
       "\n}"
     this.QrCode = this.encData;
-
   }
 
   exportAsConfig: ExportAsConfig = {
@@ -247,20 +272,32 @@ export class ManagementReportComponent implements OnInit {
 
     })
   }
+  showAssetDetails(a){
+    alert("hello world")
+    this._assetService.getAssatById(a.asset_details)
+  }
 
 
   // delete(asset) {
   //   this.isLoading = true
   //   let aid = { id: asset.id }
-  //   new Promise((res, rej) => { res(this._assetService.deleteAsset(aid)) })
+  //   new Promise((res, rej) => {
+  //     this._assetService.deleteAsset(aid)
+  //       .subscribe(data => {
+  //         this.assets = data
+  //         res()
+  //       }, err => {
+  //         console.log(err)
+  //       })
+  //   })
   //     .then(isDeleted => {
   //       this.isLoading = false
-  //       this.assets = this._assetService.getAsset()
-  //       this._notifier.notify("success", "Asset deleted successfully..!!")
+
+  //       // this._notifier.notify("success", "Asset deleted successfully..!!")
   //     })
   //     .catch(err => {
   //       this.isLoading = false
-  //       this._notifier.notify("error", "Asset not deleted. Please try again..!!")
+  //       // this._notifier.notify("error", "Asset not deleted. Please try again..!!")
   //     })
   // }
 
