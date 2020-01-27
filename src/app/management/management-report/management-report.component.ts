@@ -155,8 +155,7 @@ export class ManagementReportComponent implements OnInit {
     var warrentyYear = full + yyyy;
     var remain = a.warrenty % 1;
     var warrentyMonth = mm
-    if(  remain!=0 ){
-      
+    if(  remain!=0 ){      
     }
     var warrenty = (dd-1) +'/'+warrentyMonth+'/'+warrentyYear;
     var acquired_date =dd+'/'+mm+'/'+yyyy;
@@ -233,6 +232,7 @@ export class ManagementReportComponent implements OnInit {
           }
         })
       }
+
       if (this.employeePrint) {
         if (!this.employee) rej("employee")
         this.assetPeripherals = []
@@ -243,18 +243,12 @@ export class ManagementReportComponent implements OnInit {
               .subscribe(data => {
                 this.assetPeripherals = data.result
               }, err => {
-                //notifier add 
-                //notifier add 
-                //notifier add 
-                //notifier add 
-                //notifier add 
-                //notifier add 
-                //notifier add 
-              })
-            alert(JSON.stringify(asset))
+            })
           }
         })
       }
+
+
       if (this.groupPrint) {
         if (!this.group) rej("group")
         this.assets.forEach(asset => {

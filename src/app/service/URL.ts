@@ -7,18 +7,15 @@ export const Api = {
     updateIndent: "/employee/updateIndent",
     submitIndent: "/employee/submitIndent",
     deleteIndent: "/employee/deleteIndent",
-
-    managementLogin: "/management/login",
-     
+    managementLogin: "/management/login",     
     uploadFile: "/management/uploadFile",
     downloadFile: "/management/downloadFile",
+    //Read
     getAllFileNames: "/management/getAllFileNames",
     getAllIndentNo: "/management/getAllIndentNo",
-
     getAssetNo: "/asset/getNumber",
     getAssetId: "/asset",
     getPeripheralByAsset:"/assetPeripheral/getPeripheralByAsset",
-
     getAllCategory: "/category/getAll",
     getAllSubCategory: "/subcategory/getAll",
     getAllAssetGroup: "/assetGroup/getAll",
@@ -33,7 +30,7 @@ export const Api = {
     getAllEmployee: "/employee/getAll",
     getAllAsset: "/asset/getAll",    
     getAllAssetPeripheral: "/assetPeripheral/getAllAssetPeripheral",
-
+    //Add
     addCategory: "/category/add",
     addSubCategory: "/subcategory/add",
     addAssetGroup: "/assetGroup/add",
@@ -48,7 +45,7 @@ export const Api = {
     addAsset: "/asset/add",
     addEmployee: "/employee/add",
     addGrcir : "/mrrpo/add",
-
+    //Update
     updateCategory: "/category/update",
     updateSubCategory: "/subcategory/update",
     updateAssetGroup: "/assetGroup/update",
@@ -62,7 +59,7 @@ export const Api = {
     updatePeripherals: "/peripherals/update",
     updateAsset: "/asset/update",
     updateEmployee: "/employee/update",
-
+    //Delete
     deleteCategory: "/category/delete", 
     deleteSubCategory: "/subcategory/delete",
     deleteAssetGroup: "/assetGroup/delete",

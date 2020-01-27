@@ -176,16 +176,26 @@
             <tr *ngFor="let year of listOfYears">
                 <td>{{year.asset_id}}</td>
                 <td>{{year.price}}</td>
-                <td>{{year.employee_id}}</td>
+                <td>{{year.employee_name}}</td>
+                <td>{{year.asset_details}}</td>
+                <td>{{year.price}}</td>
+                <td>{{year.location_name}}</td>
+                <td>{{year.vendor_name}}</td>
             </tr>
         </table>
     </div>
     <div [hidden]="!employeePrint">
-        <p>Selected employee:{{emp}}</p>
+        <p>Employee Name:{{employee}}</p>
+        <p>Id:{{employee}}</p>
+        <p>Depertment:{{employee}}</p>
         <table>
             <tr *ngFor="let emp of listOfEmployee">
                 <td>{{emp.asset_id}}</td>
                 <td>{{emp.price}}</td>
+                <td>{{emp.employee_name}}</td>
+                <td>{{emp.asset_details}}</td>
+                <td>{{emp.location_name}}</td>
+                <td>{{emp.vendor_name}}</td>
             </tr>
         </table>
     </div>
@@ -214,12 +224,10 @@
     </div>
     <div class="col-sm-1">
         <button [hidden]="!Openhide" class="btn btn-warning" (click)="png()" style="margin-right: 10px">
-            <i class="fas fa-download"></i></button>
-       
+            <i class="fas fa-download"></i></button>       
     </div>
     <div class="col-sm-5"></div>
 </div>
-
 <div class="modal fade" id="peripheralModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
