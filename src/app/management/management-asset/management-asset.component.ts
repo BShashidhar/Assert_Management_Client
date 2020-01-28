@@ -299,7 +299,7 @@ export class ManagementAssetComponent implements OnInit {
     this.divisions.forEach(divs => {
       if (divs.id == dID) this.division = divs.name
     })
-    if (this.division == 'R&D') {
+    if (this.division == 'RnD') {
       this.isOpenProjectDiv = true
     }
   }
