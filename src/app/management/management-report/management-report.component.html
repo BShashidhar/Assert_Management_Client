@@ -22,9 +22,9 @@
             <div class="row">
                 <div class="col-md-8">
                     <label for="employee">Employee :</label>
-                    <select class="form-control" id="employee" [(ngModel)]="employee"
+                    <select type="text" class="form-control" id="employee" [(ngModel)]="employee"
                         [ngClass]="{ 'is-invalid': employeePrint && !employee }">
-                        <option [value]='null'>-- select employee --</option>
+                        <option [value]='null'>-- Select employee --</option>
                         <option *ngFor="let emp of employees" [value]="emp.id">{{emp.name}}</option>
                     </select>
                     <div class="invalid-feedback">
@@ -43,7 +43,7 @@
                     <label for="group">Group :</label>
                     <select class="form-control" id="group" [(ngModel)]="group"
                         [ngClass]="{ 'is-invalid': groupPrint && !group }">
-                        <option [value]='null'>-- select group --</option>
+                        <option [value]='null'>-- Select group --</option>
                         <option *ngFor="let g of groups" [value]="g">{{g}}</option>
                     </select>
                     <div class="invalid-feedback">
