@@ -286,7 +286,6 @@ export class ManagementReportComponent implements OnInit {
   //   })
   //     .then(isDeleted => {
   //       this.isLoading = false
-
   //       // this._notifier.notify("success", "Asset deleted successfully..!!")
   //     })
   //     .catch(err => {
