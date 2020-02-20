@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <label for="employee">Employee :</label>
-                    <select type="text" class="form-control" id="employee" [(ngModel)]="employee"
+                    <select class="form-control" id="employee" [(ngModel)]="employee"
                         [ngClass]="{ 'is-invalid': employeePrint && !employee }">
                         <option [value]='null'>-- Select employee --</option>
                         <option *ngFor="let emp of employees" [value]="emp.id">{{emp.name}}</option>
@@ -161,9 +161,6 @@
                     <button class="btn btn-success" (click)="genQrcode(a)" style="margin-right: 10px">
                         <i class="fas fa-qrcode"></i>
                     </button>
-                    <!-- <button class="btn btn-danger" (click)="delete(a)">
-                        <i class="fas fa-trash-alt"></i>
-                    </button> -->
                 </td>
             </tr>
         </tbody>
@@ -172,31 +169,52 @@
 <div class="print" style="text-align: center;margin-left: auto;margin-right: auto;">
     <div [hidden]="!yearPrint">
         <p>Selected year:{{year}}</p>
-        <table>
-            <tr *ngFor="let year of listOfYears">
-                <td>{{year.asset_id}}</td>
-                <td>{{year.price}}</td>
-                <td>{{year.employee_name}}</td>
-                <td>{{year.asset_details}}</td>
-                <td>{{year.price}}</td>
-                <td>{{year.location_name}}</td>
-                <td>{{year.vendor_name}}</td>
-            </tr>
+        <table >
+            <thead>
+                <tr>
+                    <td>Asset Id</td>
+                    <td>Price</td>
+                    <td>Employee Name</td>
+                    <td>Asset Details</td>
+                    <td>Price</td>
+                    <td>Location</td>
+                    <td>Vendor</td>
+                </tr>
+                <tr *ngFor="let year of listOfYears">
+                    <td>{{year.asset_id}}</td>
+                    <td>{{year.price}}</td>
+                    <td>{{year.employee_name}}</td>
+                    <td>{{year.asset_details}}</td>
+                    <td>{{year.price}}</td>
+                    <td>{{year.location_name}}</td>
+                    <td>{{year.vendor_name}}</td>
+                </tr>
+            </thead>
         </table>
     </div>
     <div [hidden]="!employeePrint">
         <p>Employee Name:{{employee}}</p>
         <p>Id:{{employee}}</p>
         <p>Depertment:{{employee}}</p>
-        <table>
-            <tr *ngFor="let emp of listOfEmployee">
-                <td>{{emp.asset_id}}</td>
-                <td>{{emp.price}}</td>
-                <td>{{emp.employee_name}}</td>
-                <td>{{emp.asset_details}}</td>
-                <td>{{emp.location_name}}</td>
-                <td>{{emp.vendor_name}}</td>
-            </tr>
+        <table class="table table-bordered table-striped">
+            <thead>
+                    <tr>
+                        <td><h7>Asset ID</h7></td>
+                            <td>Price</td>
+                            <td>Employee name</td>
+                            <td>Asset Details</td>
+                            <td>Location</td>
+                            <td>Vendor</td>
+                    </tr>
+                    <tr *ngFor="let emp of listOfEmployee">
+                        <td>{{emp.asset_id}}</td>
+                        <td>{{emp.price}}</td>
+                        <td>{{emp.employee_name}}</td>
+                        <td>{{emp.asset_details}}</td>
+                        <td>{{emp.location_name}}</td>
+                        <td>{{emp.vendor_name}}</td>
+                    </tr>
+            </thead>
         </table>
     </div>
     <div [hidden]="!groupPrint">

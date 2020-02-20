@@ -12,9 +12,8 @@ import { VendorService } from 'src/app/service/vendor.service';
 import { LocationService } from 'src/app/service/location.service';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 import { NotifierService } from 'angular-notifier';
-import { Api } from 'src/app/service/URL';
-import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
-// import { type } from 'os';
+// import * as jquery from 'jquery';
+// import select2 from 'select2/dist/js/select2';
 
 @Component({
   selector: 'app-management-report',
@@ -75,6 +74,7 @@ export class ManagementReportComponent implements OnInit {
   }
 
   ngOnInit() {
+    // jquery('.form-control').select2();
     this.Init();
   }
   Init() {

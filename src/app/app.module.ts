@@ -7,9 +7,10 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { Ng2OrderModule } from "ng2-order-pipe";
 import { NgxPaginationModule } from "ngx-pagination";
 import { FileUploadModule } from 'ng2-file-upload';
-//jhansi
+// import { LSelect2Module } from 'ngx-select2';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ExportAsModule } from 'ngx-export-as';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -127,7 +128,8 @@ const customNotifierOptions: NotifierOptions = {
     BsDatepickerModule.forRoot(),
     NotifierModule.withConfig(customNotifierOptions),
     QRCodeModule,
-    ExportAsModule
+    ExportAsModule,
+    // LSelect2Module
   ],
   providers: [],
   bootstrap: [AppComponent]
