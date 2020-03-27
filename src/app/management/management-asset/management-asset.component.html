@@ -66,7 +66,7 @@
                                 formControlName="indent_date" aria-describedby="indent-date-addon"
                                 [ngClass]="{ 'is-invalid': submitted && f.indent_date.errors }" #dp="bsDatepicker"
                                 bsDatepicker [(bsValue)]="indentDateValue" placement="right"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
                                 [attr.disabled]="isFieldsDisabled ? '' : null" />
                             <div class="input-group-append">
                                 <span class="input-group-text" id="indent-date-addon">
@@ -126,12 +126,6 @@
                             [attr.disabled]="isFieldsDisabled ? '' : null">
                     </div>
                 </div>
-
-
-
-
-
-
                 <div class="row">
                     <div class="col-sm-5 text-right">
                         <button class="btn btndark" (click)="openModal(2)" data-toggle="modal"
@@ -211,7 +205,7 @@
                                 aria-describedby="acquired-date-addon" [attr.disabled]="isFieldsDisabled ? '' : null"
                                 [ngClass]="{ 'is-invalid': submitted && f.acquired_date.errors }" #dp="bsDatepicker"
                                 bsDatepicker [(bsValue)]="acquiredDateValue" placement="right"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" />
                             <div class="input-group-append">
                                 <span class="input-group-text" id="issue-date-addon">
                                     <i class="far fa-calendar-alt"></i>
@@ -235,7 +229,7 @@
                                 [attr.disabled]="isFieldsDisabled ? '' : null"
                                 [ngClass]="{ 'is-invalid': submitted && f.issue_date.errors }" #dp="bsDatepicker"
                                 bsDatepicker [(bsValue)]="issueDateValue" placement="right"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="issue-date-addon">
                                     <i class="far fa-calendar-alt"></i>
@@ -332,7 +326,7 @@
                                 [attr.disabled]="isFieldsDisabled ? '' : null"
                                 [ngClass]="{ 'is-invalid': submitted && fa.grcir_date.errors }" #dp="bsDatepicker"
                                 bsDatepicker [(bsValue)]="grcirDateValue" placement="left"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" />
                             <div class="input-group-append">
                                 <span class="input-group-text" id="grcir-date-addon">
                                     <i class="far fa-calendar-alt"></i>
@@ -356,7 +350,7 @@
                                 [attr.disabled]="isFieldsDisabled ? '' : null"
                                 [ngClass]="{ 'is-invalid': submitted && fa.po_date.errors }" #dp="bsDatepicker"
                                 bsDatepicker [(bsValue)]="poDateValue" placement="left"
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" />
                             <div class="input-group-append">
                                 <span class="input-group-text" id="po-date-addon">
                                     <i class="far fa-calendar-alt"></i>
